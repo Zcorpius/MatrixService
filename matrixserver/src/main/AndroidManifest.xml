@@ -7,6 +7,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MatrixService" />
+        android:theme="@style/Theme.MatrixService">
+        <service
+            android:name=".service.MatrixServerService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
+            <!-- 添加 <intent-filter> 声明 MAIN + LAUNCHER，让系统知道这是应用入口 -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>
