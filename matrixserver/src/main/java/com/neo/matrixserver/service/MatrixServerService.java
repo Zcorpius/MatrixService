@@ -7,6 +7,7 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.neo.matrixserver.IMatrixProxy;
+import com.neo.matrixserver.state.StateInfo;
 
 public class MatrixServerService extends Service {
 
@@ -23,9 +24,54 @@ public class MatrixServerService extends Service {
 
         @Override
         public void setState(int state) throws RemoteException {
-            Log.d(TAG, "setState state: " + state);
+            Log.d(TAG, "setState: " + currentState);
             currentState = state;
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Log.i(TAG, "setState Done.");
         }
+
+        @Override
+        public void setState_aysc(int state) throws RemoteException {
+            Log.d(TAG, "setState_aysc: " + currentState);
+            currentState = state;
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Log.i(TAG, "setState_aysc Done.");
+        }
+
+        @Override
+        public int getStateInfo_in(StateInfo info) throws RemoteException {
+            Log.d(TAG, "StateInfo: " + info);
+            info.setUserId(101);
+            info.setValue(201);
+            return 0;
+        }
+
+        @Override
+        public int getStateInfo_out(StateInfo info) throws RemoteException {
+            Log.d(TAG, "getStateInfo_out: " + info);
+            info.setUserId(201);
+            info.setValue(301);
+            return 0;
+        }
+
+        @Override
+        public int getStateInfo_inout(StateInfo info) throws RemoteException {
+            Log.d(TAG, "getStateObj_inout: " + info);
+            info.setUserId(301);
+            info.setValue(401);
+            return 0;
+        }
+
     };
 
     @Override
