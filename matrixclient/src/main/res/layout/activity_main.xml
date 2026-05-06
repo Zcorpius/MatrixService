@@ -30,6 +30,34 @@
         android:text="Set State" />
 
     <Button
+        android:id="@+id/btn_set_state_sync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Set State Sync" />
+
+    <Button
+        android:id="@+id/btn_state_info_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="State Info In" />
+
+    <Button
+        android:id="@+id/btn_state_info_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="State Info Out" />
+
+    <Button
+        android:id="@+id/btn_state_info_inout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="State Info InOut" />
+
+    <Button
         android:id="@+id/btn_stop_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

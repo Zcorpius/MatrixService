@@ -24,7 +24,7 @@ public class MatrixServerService extends Service {
 
         @Override
         public void setState(int state) throws RemoteException {
-            Log.d(TAG, "setState: " + currentState);
+            Log.d(TAG, "setState: " + state);
             currentState = state;
             try {
                 Thread.sleep(3000);
@@ -37,7 +37,7 @@ public class MatrixServerService extends Service {
 
         @Override
         public void setState_aysc(int state) throws RemoteException {
-            Log.d(TAG, "setState_aysc: " + currentState);
+            Log.d(TAG, "setState_aysc: " + state);
             currentState = state;
             try {
                 Thread.sleep(3000);
@@ -50,7 +50,7 @@ public class MatrixServerService extends Service {
 
         @Override
         public int getStateInfo_in(StateInfo info) throws RemoteException {
-            Log.d(TAG, "StateInfo: " + info);
+            Log.d(TAG, "getStateInfo_in: " + info);
             info.setUserId(101);
             info.setValue(201);
             return 0;
@@ -66,7 +66,7 @@ public class MatrixServerService extends Service {
 
         @Override
         public int getStateInfo_inout(StateInfo info) throws RemoteException {
-            Log.d(TAG, "getStateObj_inout: " + info);
+            Log.d(TAG, "getStateInfo_inout: " + info);
             info.setUserId(301);
             info.setValue(401);
             return 0;

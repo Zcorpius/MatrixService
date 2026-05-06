@@ -58,6 +58,8 @@ public class StateInfo implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(userId);
+        dest.writeInt(value);
     }
 
     /**
@@ -73,7 +75,7 @@ public class StateInfo implements Parcelable {
     @Override
     public String toString() {
         return "StateInfo {" +
-                ", userId:" + userId +
+                "userId:" + userId +
                 ", value:" + value +
                 '}';
     }

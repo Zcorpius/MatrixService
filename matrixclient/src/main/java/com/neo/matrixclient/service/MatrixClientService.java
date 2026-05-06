@@ -12,6 +12,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.neo.matrixserver.IMatrixProxy;
+import com.neo.matrixserver.state.StateInfo;
 
 public class MatrixClientService extends Service {
 
@@ -77,6 +78,49 @@ public class MatrixClientService extends Service {
             return true;
         } catch (RemoteException e) {
             return false;
+        }
+    }
+
+    public boolean requestSetStateSync(int state) {
+        if (remoteProxy == null) return false;
+        try {
+            remoteProxy.setState_aysc(state);
+            return true;
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    public void requestStateInfoIn() {
+        if (remoteProxy == null) return;
+        StateInfo info = new StateInfo(100,200);
+        try {
+            remoteProxy.getStateInfo_in(info);
+            Log.d(TAG, "requestStateInfoInOut: " + info);
+        } catch (RemoteException e) {
+            Log.e(TAG, "requestStateInfoInOut Exception: " + e);
+        }
+    }
+
+    public void requestStateInfoOut() {
+        if (remoteProxy == null) return;
+        StateInfo info = new StateInfo(200,300);
+        try {
+            remoteProxy.getStateInfo_out(info);
+            Log.d(TAG, "requestStateInfoOut: " + info);
+        } catch (RemoteException e) {
+            Log.e(TAG, "requestStateInfoOut Exception: " + e);
+        }
+    }
+
+    public void requestStateInfoInOut() {
+        if (remoteProxy == null) return;
+        StateInfo info = new StateInfo(300,400);
+        try {
+            remoteProxy.getStateInfo_inout(info);
+            Log.d(TAG, "requestStateInfoInOut: " + info);
+        } catch (RemoteException e) {
+            Log.e(TAG, "requestStateInfoInOut Exception: " + e);
         }
     }
 

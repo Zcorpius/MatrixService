@@ -30,12 +30,20 @@ public class MainActivity extends AppCompatActivity {
         Button btnStartService = findViewById(R.id.btn_start_service);
         Button btnGetState = findViewById(R.id.btn_get_state);
         Button btnSetState = findViewById(R.id.btn_set_state);
+        Button btnSetStateSync = findViewById(R.id.btn_set_state_sync);
+        Button btnStateInfoIn = findViewById(R.id.btn_state_info_in);
+        Button btnStateInfoOut = findViewById(R.id.btn_state_info_out);
+        Button btnStateInfoInOut = findViewById(R.id.btn_state_info_inout);
         Button btnStopService = findViewById(R.id.btn_stop_service);
         TextView tvState = findViewById(R.id.tv_state);
 
         btnStartService.setOnClickListener(v -> viewModel.startService());
         btnGetState.setOnClickListener(v -> viewModel.getState());
         btnSetState.setOnClickListener(v -> viewModel.setState());
+        btnSetStateSync.setOnClickListener(v -> viewModel.setStateSync());
+        btnStateInfoIn.setOnClickListener(v -> viewModel.StateInfoIn());
+        btnStateInfoOut.setOnClickListener(v -> viewModel.StateInfoOut());
+        btnStateInfoInOut.setOnClickListener(v -> viewModel.StateInfoInOut());
         btnStopService.setOnClickListener(v -> viewModel.stopService());
 
         viewModel.stateText.observe(this, tvState::setText);
