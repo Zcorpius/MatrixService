@@ -11,6 +11,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.neo.matrixserver.IMatrixCallback;
 import com.neo.matrixserver.IMatrixProxy;
 import com.neo.matrixserver.state.StateInfo;
 
@@ -20,7 +21,7 @@ public class MatrixClientService extends Service {
 
     @Nullable
     public static MatrixClientService INSTANCE;
-
+    IMatrixCallback mMatrixCallback;
     private IMatrixProxy remoteProxy;
     private boolean isRemoteBound = false;
 
@@ -30,6 +31,7 @@ public class MatrixClientService extends Service {
             Log.d(TAG, "onServiceConnected name: " + name);
             remoteProxy = IMatrixProxy.Stub.asInterface(service);
             isRemoteBound = true;
+            registerMatrixServerCallBack();
         }
 
         @Override
@@ -37,13 +39,27 @@ public class MatrixClientService extends Service {
             Log.d(TAG, "onServiceDisconnected name: " + name);
             remoteProxy = null;
             isRemoteBound = false;
+            unregisterMatrixServerCallBack();
         }
     };
+
+    /**
+     * 回调实现类
+     * 对于oneway接口，使用匿名类实现会导致回调对象为null。需要使用具名类继承自IMatrixCallback.Stub
+     */
+    private static class MatrixCallbackImpl extends IMatrixCallback.Stub {
+        @Override
+        public void onStateChanged(int state) throws RemoteException {
+            Log.d(TAG, "onStateChanged state: " + state);
+        }
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
+        // 使用具名类而不是匿名类，避免oneway接口的问题
+        mMatrixCallback = new MatrixCallbackImpl();
         bindRemoteService();
     }
 
@@ -131,5 +147,26 @@ public class MatrixClientService extends Service {
                 "com.neo.matrixserver.service.MatrixServerService"));
         boolean result = bindService(intent, remoteConnection, Context.BIND_AUTO_CREATE);
         Log.d(TAG, "bind MatrixServerService result: " + result);
+    }
+
+
+    private void registerMatrixServerCallBack() {
+        Log.d(TAG, "registerMatrixServerCallBack() called, mIMatrixProxy=" + remoteProxy);
+        try {
+            remoteProxy.registerMatrixCallBack(mMatrixCallback);
+            Log.d(TAG, "registerMatrixServerCallBack() success");
+        } catch (RemoteException e) {
+            Log.e(TAG, "registerMatrixServerCallBack Exception: " + e.getMessage());
+        }
+    }
+
+    private void unregisterMatrixServerCallBack() {
+        Log.d(TAG, "unregisterMatrixServerCallBack() called, mIMatrixProxy=" + remoteProxy);
+        try {
+            remoteProxy.unregisterMatrixCallBack(mMatrixCallback);
+            Log.d(TAG, "unregisterMatrixCallBack() success");
+        } catch (RemoteException e) {
+            Log.e(TAG, "unregisterMatrixCallBack Exception: " + e.getMessage());
+        }
     }
 }
