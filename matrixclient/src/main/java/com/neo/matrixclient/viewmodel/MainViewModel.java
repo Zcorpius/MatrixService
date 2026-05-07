@@ -26,31 +26,6 @@ public class MainViewModel extends AndroidViewModel {
         toastMessage.setValue("Service Started");
     }
 
-    public void getState() {
-        MatrixClientService service = MatrixClientService.INSTANCE;
-        if (service == null) {
-            toastMessage.setValue("Service not running");
-            return;
-        }
-        int state = service.requestGetState();
-        stateText.setValue("State: " + state);
-    }
-
-    public void setState() {
-        MatrixClientService service = MatrixClientService.INSTANCE;
-        if (service == null) {
-            toastMessage.setValue("Service not running");
-            return;
-        }
-        int newState = (int) (Math.random() * 100);
-        if (service.requestSetState(newState)) {
-            stateText.setValue("State: " + newState);
-            toastMessage.setValue("State set to " + newState);
-        } else {
-            toastMessage.setValue("Set state failed");
-        }
-    }
-
     public void stopService() {
         Context context = getApplication();
         Intent intent = new Intent(context, MatrixClientService.class);

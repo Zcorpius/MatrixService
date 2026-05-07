@@ -28,14 +28,10 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         Button btnStartService = findViewById(R.id.btn_start_service);
-        Button btnGetState = findViewById(R.id.btn_get_state);
-        Button btnSetState = findViewById(R.id.btn_set_state);
         Button btnStopService = findViewById(R.id.btn_stop_service);
         TextView tvState = findViewById(R.id.tv_state);
 
         btnStartService.setOnClickListener(v -> viewModel.startService());
-        btnGetState.setOnClickListener(v -> viewModel.getState());
-        btnSetState.setOnClickListener(v -> viewModel.setState());
         btnStopService.setOnClickListener(v -> viewModel.stopService());
 
         viewModel.stateText.observe(this, tvState::setText);
