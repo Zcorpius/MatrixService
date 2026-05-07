@@ -39,7 +39,6 @@ public class MatrixClientService extends Service {
             Log.d(TAG, "onServiceDisconnected name: " + name);
             remoteProxy = null;
             isRemoteBound = false;
-            unregisterMatrixServerCallBack();
         }
     };
 
@@ -72,6 +71,7 @@ public class MatrixClientService extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (isRemoteBound) {
+            unregisterMatrixServerCallBack();
             unbindService(remoteConnection);
             isRemoteBound = false;
         }

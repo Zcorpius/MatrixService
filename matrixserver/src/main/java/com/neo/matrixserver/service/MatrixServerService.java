@@ -17,7 +17,15 @@ public class MatrixServerService extends Service {
 
     private int currentState = 0;
 
-    private RemoteCallbackList<IMatrixCallback> mMatrixCallBackList = new RemoteCallbackList<>();
+    private RemoteCallbackList<IMatrixCallback> mMatrixCallBackList = new RemoteCallbackList<>() {
+        @Override
+        public void onCallbackDied(IMatrixCallback callbackInterface) {
+            int count = mMatrixCallBackList.beginBroadcast();
+            Log.e(TAG, "Client died, callback removed: " + callbackInterface +
+                    ", now mMatrixCallBackList count = " + count);
+            mMatrixCallBackList.finishBroadcast();
+        }
+    };
 
     private final IMatrixProxy.Stub binder = new IMatrixProxy.Stub() {
         @Override
@@ -83,6 +91,10 @@ public class MatrixServerService extends Service {
                 return;
             }
             mMatrixCallBackList.register(callback);
+
+            int count = mMatrixCallBackList.beginBroadcast();
+            Log.d(TAG, "registerMatrixCallBack, mMatrixCallBackList count = " + count);
+            mMatrixCallBackList.finishBroadcast();
         }
 
         @Override
